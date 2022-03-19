@@ -8,7 +8,7 @@ function App() {
   return (
     <div>
       <Header />
-      <ItemListContainer greeting="Bienvenido a AMG-PURSE" />
+      <ItemListContainer />
       <ItemCount />
     </div>
   );
