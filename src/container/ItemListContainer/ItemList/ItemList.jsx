@@ -6,8 +6,8 @@ export default function ItemList({ productos }) {
     <Container>
       <Row gap={2}>
         {productos.map((p) => (
-          <Col>
-            <Item key={p.id} producto={p} />
+          <Col key={p.id}>
+            <Item producto={p} />
           </Col>
         ))}
       </Row>

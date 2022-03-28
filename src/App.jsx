@@ -2,14 +2,15 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header/Header";
 import ItemListContainer from "./container/ItemListContainer/ItemListContainer";
-import ItemCount from "./components/ItemCount/ItemCount";
+import ItemDetailContainer from "./container/ItemDetailContainer/ItemDetailContainer";
 
 function App() {
   return (
     <div>
       <Header />
       <ItemListContainer />
-      <ItemCount />
+      <ItemDetailContainer />
+      {/* <ItemCount /> */}
     </div>
   );
 }

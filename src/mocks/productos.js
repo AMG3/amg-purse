@@ -43,7 +43,7 @@ export const mockProductos = [
       "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
   },
   {
-    id: 19,
+    id: 6,
     title: "Opna Women's Short Sleeve Moisture",
     price: 7.95,
     description:
