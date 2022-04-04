@@ -2,8 +2,6 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { Col, Row, Stack } from "react-bootstrap";
 
-//TODO: pasar inital, stock y onAdd como paràmetros,
-// al usar este componente se puede pasar hardcoded
 const ItemCount = ({ onAdd }) => {
   const initial = 1;
   const stock = 5;

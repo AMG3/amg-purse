@@ -5,11 +5,6 @@ import { Link } from "react-router-dom";
 import ItemCount from "../../../components/ItemCount/ItemCount";
 
 export default function ItemDetail({ item }) {
-  // TODO:Agregar un estado acà,
-  // meter la funcion onadd
-  //si el estado cambia mostrar los dos botones de ir al carro o seguir comprando y desaparecer el item count
-  // cuando agrega al carrito desaparecen las opciones y solo sale terminar compra y continuar comprando
-
   const [agregado, setAgregado] = useState(0);
 
   const onAdd = (cantidad) => {
@@ -45,11 +40,3 @@ export default function ItemDetail({ item }) {
     </Card>
   );
 }
-
-/* <Link to="Cart">
-  <Button onClick={}>Ir al Carrito o Seguir Comprando</Button>
-</Link>;
-
-<Link to="Cart">
-  <Button onClick={}>Ir al Carrito o Seguir Comprando</Button>
-</Link>; */
