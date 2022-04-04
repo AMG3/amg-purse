@@ -2,7 +2,9 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { Col, Row, Stack } from "react-bootstrap";
 
-const ItemCount = () => {
+//TODO: pasar inital, stock y onAdd como paràmetros,
+// al usar este componente se puede pasar hardcoded
+const ItemCount = ({ onAdd }) => {
   const initial = 1;
   const stock = 5;
 
@@ -14,10 +16,6 @@ const ItemCount = () => {
 
   const disminuir = () => {
     setCount(count - 1);
-  };
-
-  const onAdd = () => {
-    alert("Agregarás " + count + " productos");
   };
 
   return (
@@ -46,8 +44,8 @@ const ItemCount = () => {
         </Col>
       </Row>
       <Row className="justify-content-md-center">
-        <Col xs lg="5" className="justify-content-md-center">
-          <Button onClick={onAdd} disabled={stock === 0}>
+        <Col xs lg="6" className="justify-content-md-center">
+          <Button onClick={() => onAdd(count)} disabled={stock === 0}>
             Agregar al Carrito
           </Button>
         </Col>
