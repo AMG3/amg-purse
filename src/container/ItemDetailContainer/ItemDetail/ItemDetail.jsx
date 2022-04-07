@@ -3,12 +3,16 @@ import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import ItemCount from "../../../components/ItemCount/ItemCount";
+import { useCartContext } from "../../../context/CartContext";
 
 export default function ItemDetail({ item }) {
   const [agregado, setAgregado] = useState(0);
 
+  const { addToCart } = useCartContext();
+
   const onAdd = (cantidad) => {
     setAgregado(cantidad);
+    addToCart({ item, cantidad });
   };
 
   return (

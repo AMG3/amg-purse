@@ -27,9 +27,9 @@ function Header() {
             </NavLink>
           </Nav>
           <Nav>
-            <Nav.Link eventKey={2} href="/cart">
+            <NavLink to="/cart">
               <CartWidget />
-            </Nav.Link>
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>

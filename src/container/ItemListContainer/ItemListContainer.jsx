@@ -18,11 +18,11 @@ function ItemListContainer() {
         .then((resp) =>
           setProducts(resp.filter((prod) => prod.category === categoryId))
         )
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     } else {
       taskProductos
         .then((resp) => setProducts(resp))
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     }
   }, [categoryId]);
 

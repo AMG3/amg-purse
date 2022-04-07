@@ -16,7 +16,7 @@ export default function ItemDetailContainer() {
     if (id) {
       taskProductos
         .then((resp) => setItem(resp.find((prod) => prod.id === id)))
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     }
   });
 
