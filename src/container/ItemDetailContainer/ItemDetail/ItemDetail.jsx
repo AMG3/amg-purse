@@ -20,7 +20,7 @@ export default function ItemDetail({ item }) {
       <Card.Img
         variant="top"
         src={item.pictureUrl}
-        style={{ width: "18rem", margin: "1rem 0" }}
+        style={{ width: "10rem", margin: "1rem 0" }}
       />
       <Card.Body>
         <Card.Title>{item.title}</Card.Title>
