@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { mockProductos } from "../../mocks/productos";
 import ItemList from "./ItemList/ItemList";
-
-const taskProductos = new Promise((resolve, reject) => {
-  setTimeout(() => resolve(mockProductos), 2000);
-});
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore";
 
 function ItemListContainer() {
   const [productos, setProducts] = useState([]);
@@ -13,16 +15,25 @@ function ItemListContainer() {
   const { categoryId } = useParams();
 
   useEffect(() => {
+    const querydb = getFirestore();
+
+    const queryCollection = collection(querydb, "productos");
+
     if (categoryId) {
-      taskProductos
-        .then((resp) =>
-          setProducts(resp.filter((prod) => prod.category === categoryId))
-        )
-        .catch((err) => console.error(err));
+      const q = query(queryCollection, where("category", "==", categoryId));
+      getDocs(q).then((resp) => {
+        if (resp.size === 0) {
+          console.log("No hay productos de esta categoria");
+          setProducts([]);
+        }
+        const prods = resp.docs.map((p) => ({ id: p.id, ...p.data() }));
+        setProducts(prods);
+      });
     } else {
-      taskProductos
-        .then((resp) => setProducts(resp))
-        .catch((err) => console.error(err));
+      getDocs(queryCollection).then((resp) => {
+        const prods = resp.docs.map((p) => ({ id: p.id, ...p.data() }));
+        setProducts(prods);
+      });
     }
   }, [categoryId]);
 
@@ -30,6 +41,8 @@ function ItemListContainer() {
     <div>
       {productos.length > 0 ? (
         <ItemList productos={productos} />
+      ) : productos.length === 0 ? (
+        <p>No hay productos de esta categoría</p>
       ) : (
         <p>Cargando productos...</p>
       )}

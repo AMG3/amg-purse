@@ -1,23 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { mockProductos } from "../../mocks/productos";
 import ItemDetail from "./ItemDetail/ItemDetail";
-
-const taskProductos = new Promise((resolve, reject) => {
-  setTimeout(() => resolve(mockProductos), 2000);
-});
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 export default function ItemDetailContainer() {
+  const isMounted = useRef(false);
   const [item, setItem] = useState({});
 
   const { id } = useParams();
 
   useEffect(() => {
+    isMounted.current = true;
+
     if (id) {
-      taskProductos
-        .then((resp) => setItem(resp.find((prod) => prod.id === id)))
-        .catch((err) => console.error(err));
+      const querydb = getFirestore();
+      const queryProd = doc(querydb, "productos", id);
+      getDoc(queryProd).then((resp) => {
+        if (isMounted.current) {
+          setItem({ id: resp.id, ...resp.data() });
+        }
+      });
     }
+
+    return () => {
+      isMounted.current = false;
+    };
   });
 
   return item ? <ItemDetail item={item} /> : <p>No encontrado...</p>;
