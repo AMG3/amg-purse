@@ -20,7 +20,11 @@ function ItemListContainer() {
     const queryCollection = collection(querydb, "productos");
 
     if (categoryId) {
-      const q = query(queryCollection, where("category", "==", categoryId));
+      const q = query(
+        queryCollection,
+        where("category", "==", categoryId),
+        where("stock", ">", 0)
+      );
       getDocs(q).then((resp) => {
         if (resp.size === 0) {
           console.log("No hay productos de esta categoria");
@@ -30,7 +34,8 @@ function ItemListContainer() {
         setProducts(prods);
       });
     } else {
-      getDocs(queryCollection).then((resp) => {
+      const q = query(queryCollection, where("stock", ">", 0));
+      getDocs(q).then((resp) => {
         const prods = resp.docs.map((p) => ({ id: p.id, ...p.data() }));
         setProducts(prods);
       });

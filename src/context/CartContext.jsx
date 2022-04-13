@@ -8,6 +8,7 @@ export default function CartContextProvider({ children }) {
   const [cartContent, setCartContent] = useState({
     cantidadTotal: 0,
     list: [],
+    precioTotal: 0,
   });
 
   const addToCart = (item) => {
@@ -16,11 +17,13 @@ export default function CartContextProvider({ children }) {
       setCartContent({
         cantidadTotal: cartContent.cantidadTotal + item.cantidad,
         list: [...cartContent.list],
+        precioTotal: cartContent.precioTotal + item.cantidad * item.item.price,
       });
     } else {
       setCartContent({
         cantidadTotal: cartContent.cantidadTotal + item.cantidad,
         list: [...cartContent.list, item],
+        precioTotal: cartContent.precioTotal + item.cantidad * item.item.price,
       });
     }
   };
@@ -31,6 +34,7 @@ export default function CartContextProvider({ children }) {
     setCartContent({
       cantidadTotal: cartContent.cantidadTotal - item.cantidad,
       list: [...cartContent.list],
+      precioTotal: cartContent.precioTotal + item.cantidad * item.item.price,
     });
   };
 
@@ -38,6 +42,7 @@ export default function CartContextProvider({ children }) {
     setCartContent({
       cantidadTotal: 0,
       list: [],
+      precioTotal: 0,
     });
   };
 

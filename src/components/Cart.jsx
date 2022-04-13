@@ -1,20 +1,76 @@
-import { useEffect, useState } from "react";
-import { Col, Row, Container, Button, Image } from "react-bootstrap";
+import { useState } from "react";
+import {
+  collection,
+  addDoc,
+  getFirestore,
+  updateDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+import { Col, Row, Container, Button, Image, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../context/CartContext";
 
 function Cart() {
   const { cartContent, cleanCart, removeFromCart } = useCartContext();
-  const [totalPrice, setTotalPrice] = useState(0);
 
-  useEffect(() => {
-    let total = 0;
-    cartContent.list.forEach((item) => {
-      total += item.cantidad * item.item.price;
+  const [orderId, setOrderId] = useState(null);
+  const [show, setShow] = useState(false);
+
+  const generarOrden = (e) => {
+    e.preventDefault();
+
+    let orden = {};
+
+    orden.buyer = {
+      name: "Ana",
+      phone: "6018007034",
+      email: "pitufina400@gmail.com",
+    };
+
+    orden.total = +cartContent.precioTotal.toFixed(2);
+    orden.date = new Date();
+
+    orden.items = cartContent.list.map(({ item, cantidad }) => {
+      const id = item.id;
+      const title = item.title;
+      const precio = item.price * cantidad;
+
+      return { id, title, precio, cantidad };
     });
 
-    setTotalPrice(total);
-  }, [cartContent, totalPrice]);
+    sendOrder(orden);
+  };
+
+  const sendOrder = (order) => {
+    const db = getFirestore();
+
+    const ordersCollection = collection(db, "orders");
+
+    addDoc(ordersCollection, order)
+      .then(({ id }) => {
+        setOrderId(id);
+        setShow(true);
+        updateStock(order);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        cleanCart();
+      });
+  };
+
+  const updateStock = ({ items }) => {
+    const db = getFirestore();
+
+    for (const item of items) {
+      const product = doc(db, "productos", item.id);
+      getDoc(product).then((resp) => {
+        updateDoc(product, { stock: resp.data().stock - item.cantidad });
+      });
+    }
+  };
+
+  const handleClose = () => setShow(false);
 
   return (
     <>
@@ -79,16 +135,42 @@ function Cart() {
               </strong>
             </Col>
             <Col xs lg="2">
-              <strong>$ {totalPrice.toFixed(2)}</strong>
+              <strong>$ {cartContent.precioTotal.toFixed(2)}</strong>
             </Col>
             <Col xs lg="2"></Col>
           </Row>
           <br />
-          <button className="btn btn-outline-warning" onClick={cleanCart}>
-            Limpiar Carro
-          </button>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Button variant="outline-warning" onClick={cleanCart}>
+              Limpiar Carro
+            </Button>
+            <Button variant="warning" onClick={generarOrden}>
+              Generar Orden
+            </Button>
+          </div>
         </Container>
       )}
+      <>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Orden Generada</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Su orden fue generada con el código: <strong>{orderId}</strong>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={handleClose}>
+              Aceptar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
     </>
   );
 }
