@@ -8,7 +8,7 @@ const CartWidget = () => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    setTotal(cartContent.cantidadTotal);
+    setTotal(cartContent.totalQuantity);
   }, [cartContent]);
 
   return (

@@ -7,11 +7,11 @@ const ItemCount = ({ onAdd, stock }) => {
 
   const [count, setCount] = useState(initial);
 
-  const aumentar = () => {
+  const increase = () => {
     setCount(count + 1);
   };
 
-  const disminuir = () => {
+  const decrease = () => {
     setCount(count - 1);
   };
 
@@ -21,7 +21,7 @@ const ItemCount = ({ onAdd, stock }) => {
         <Col xs lg="2" className="justify-content-md-center">
           <Button
             variant="warning"
-            onClick={disminuir}
+            onClick={decrease}
             disabled={count === initial}
           >
             -
@@ -33,7 +33,7 @@ const ItemCount = ({ onAdd, stock }) => {
         <Col xs lg="2" className="justify-content-md-center">
           <Button
             variant="success"
-            onClick={aumentar}
+            onClick={increase}
             disabled={count === stock}
           >
             +

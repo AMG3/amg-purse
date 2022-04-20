@@ -8,16 +8,17 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { PRODUCTS } from "../../constants/firebase-tables";
 
 function ItemListContainer() {
-  const [productos, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const { categoryId } = useParams();
 
   useEffect(() => {
     const querydb = getFirestore();
 
-    const queryCollection = collection(querydb, "productos");
+    const queryCollection = collection(querydb, PRODUCTS);
 
     if (categoryId) {
       const q = query(
@@ -44,9 +45,9 @@ function ItemListContainer() {
 
   return (
     <div>
-      {productos.length > 0 ? (
-        <ItemList productos={productos} />
-      ) : productos.length === 0 ? (
+      {products.length > 0 ? (
+        <ItemList products={products} />
+      ) : products.length === 0 ? (
         <p>No hay productos de esta categoría</p>
       ) : (
         <p>Cargando productos...</p>

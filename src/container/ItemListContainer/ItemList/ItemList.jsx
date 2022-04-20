@@ -1,13 +1,13 @@
 import { Col, Container, Row } from "react-bootstrap";
 import Item from "../Item/Item";
 
-export default function ItemList({ productos }) {
+export default function ItemList({ products }) {
   return (
     <Container>
       <Row gap={2}>
-        {productos.map((p) => (
+        {products.map((p) => (
           <Col key={p.id}>
-            <Item producto={p} />
+            <Item product={p} />
           </Col>
         ))}
       </Row>

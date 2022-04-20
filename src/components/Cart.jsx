@@ -7,9 +7,11 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import { Col, Row, Container, Button, Image, Modal } from "react-bootstrap";
+import { Container, Button, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../context/CartContext";
+import CartList from "./CartList/CartList";
+import { PRODUCTS } from "../constants/firebase-tables";
 
 function Cart() {
   const { cartContent, cleanCart, removeFromCart } = useCartContext();
@@ -22,27 +24,27 @@ function Cart() {
     phone: "",
   });
 
-  const generarOrden = (e) => {
+  const generateOrder = (e) => {
     e.preventDefault();
 
-    let orden = {};
+    let order = {};
 
     // Validar formulario
 
-    orden.buyer = formData;
+    order.buyer = formData;
 
-    orden.total = +cartContent.precioTotal.toFixed(2);
-    orden.date = new Date();
+    order.total = +cartContent.totalPrice.toFixed(2);
+    order.date = new Date();
 
-    orden.items = cartContent.list.map(({ item, cantidad }) => {
+    order.items = cartContent.list.map(({ item, quantity }) => {
       const id = item.id;
       const title = item.title;
-      const precio = item.price * cantidad;
+      const price = item.price * quantity;
 
-      return { id, title, precio, cantidad };
+      return { id, title, price, quantity };
     });
 
-    sendOrder(orden);
+    sendOrder(order);
   };
 
   const sendOrder = (order) => {
@@ -66,9 +68,9 @@ function Cart() {
     const db = getFirestore();
 
     for (const item of items) {
-      const product = doc(db, "productos", item.id);
+      const product = doc(db, PRODUCTS, item.id);
       getDoc(product).then((resp) => {
-        updateDoc(product, { stock: resp.data().stock - item.cantidad });
+        updateDoc(product, { stock: resp.data().stock - item.quantity });
       });
     }
   };
@@ -93,62 +95,7 @@ function Cart() {
         </>
       ) : (
         <Container>
-          <Row>
-            <Col xs lg="4">
-              <strong>Producto</strong>
-            </Col>
-            <Col xs lg="2">
-              <strong>Cantidad</strong>
-            </Col>
-            <Col xs lg="2">
-              <strong>Precio Unitario</strong>
-            </Col>
-            <Col xs lg="2">
-              <strong>Total</strong>
-            </Col>
-            <Col xs lg="2">
-              <strong>Acciones</strong>
-            </Col>
-          </Row>
-          {cartContent.list.map((item) => (
-            <Row key={item.item.id}>
-              <Col xs lg="4" className="product">
-                <Image
-                  thumbnail="true"
-                  src={item.item.pictureUrl}
-                  style={{ width: "50px", margin: "0.5rem 1rem 0 0" }}
-                />
-                <p>{item.item.title}</p>
-              </Col>
-              <Col xs lg="2">
-                {item.cantidad}
-              </Col>
-              <Col xs lg="2">
-                $ {item.item.price}
-              </Col>
-              <Col xs lg="2">
-                $ {item.cantidad * item.item.price}
-              </Col>
-              <Col xs lg="2">
-                <Button variant="danger" onClick={() => removeFromCart(item)}>
-                  Eliminar
-                </Button>
-              </Col>
-            </Row>
-          ))}
-          <Row>
-            <Col xs lg="4"></Col>
-            <Col xs lg="2"></Col>
-            <Col xs lg="2">
-              <strong>
-                <em>TOTAL</em>
-              </strong>
-            </Col>
-            <Col xs lg="2">
-              <strong>$ {cartContent.precioTotal.toFixed(2)}</strong>
-            </Col>
-            <Col xs lg="2"></Col>
-          </Row>
+          <CartList cartContent={cartContent} removeFromCart={removeFromCart} />
           <br />
           <div
             style={{
@@ -160,7 +107,7 @@ function Cart() {
             <Button variant="outline-warning" onClick={cleanCart}>
               Limpiar Carro
             </Button>
-            <form onSubmit={generarOrden}>
+            <form onSubmit={generateOrder}>
               <input
                 type="text"
                 name="nombre"

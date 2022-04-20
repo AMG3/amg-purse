@@ -6,13 +6,13 @@ import ItemCount from "../../../components/ItemCount/ItemCount";
 import { useCartContext } from "../../../context/CartContext";
 
 export default function ItemDetail({ item }) {
-  const [agregado, setAgregado] = useState(0);
+  const [quantity, setQuantity] = useState(0);
 
   const { addToCart } = useCartContext();
 
-  const onAdd = (cantidad) => {
-    setAgregado(cantidad);
-    addToCart({ item, cantidad });
+  const onAdd = (quantity) => {
+    setQuantity(quantity);
+    addToCart({ item, quantity });
   };
 
   return (
@@ -28,7 +28,7 @@ export default function ItemDetail({ item }) {
         <Card.Subtitle className="mb-2 text-muted">
           $ {item.price}
         </Card.Subtitle>
-        {agregado <= 0 ? (
+        {quantity <= 0 ? (
           <ItemCount onAdd={onAdd} stock={item.stock} />
         ) : (
           <>
