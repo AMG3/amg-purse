@@ -16,17 +16,20 @@ function Cart() {
 
   const [orderId, setOrderId] = useState(null);
   const [show, setShow] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    nombre: "",
+    phone: "",
+  });
 
   const generarOrden = (e) => {
     e.preventDefault();
 
     let orden = {};
 
-    orden.buyer = {
-      name: "Ana",
-      phone: "6018007034",
-      email: "pitufina400@gmail.com",
-    };
+    // Validar formulario
+
+    orden.buyer = formData;
 
     orden.total = +cartContent.precioTotal.toFixed(2);
     orden.date = new Date();
@@ -68,6 +71,13 @@ function Cart() {
         updateDoc(product, { stock: resp.data().stock - item.cantidad });
       });
     }
+  };
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const handleClose = () => setShow(false);
@@ -150,9 +160,32 @@ function Cart() {
             <Button variant="outline-warning" onClick={cleanCart}>
               Limpiar Carro
             </Button>
-            <Button variant="warning" onClick={generarOrden}>
-              Generar Orden
-            </Button>
+            <form onSubmit={generarOrden}>
+              <input
+                type="text"
+                name="nombre"
+                placeholder="Ingrese su Nombre"
+                value={formData.nombre}
+                onChange={handleChange}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Ingrese su Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <input
+                type="phone"
+                name="phone"
+                placeholder="Ingrese su Teléfono"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+              <Button variant="warning" type="submit">
+                Generar Orden
+              </Button>
+            </form>
           </div>
         </Container>
       )}
