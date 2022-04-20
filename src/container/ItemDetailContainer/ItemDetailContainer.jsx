@@ -16,11 +16,14 @@ export default function ItemDetailContainer() {
     if (id) {
       const querydb = getFirestore();
       const queryProd = doc(querydb, PRODUCTS, id);
-      getDoc(queryProd).then((resp) => {
-        if (isMounted.current) {
-          setItem({ id: resp.id, ...resp.data() });
-        }
-      });
+
+      getDoc(queryProd)
+        .then((resp) => {
+          if (isMounted.current) {
+            setItem({ id: resp.id, ...resp.data() });
+          }
+        })
+        .catch((error) => console.error(error));
     }
 
     return () => {
