@@ -7,7 +7,11 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import { ORDERS, PRODUCTS } from "../../constants/firebase-tables";
+import {
+  EMAIL_REGEXP,
+  ORDERS,
+  PRODUCTS,
+} from "../../constants/firebase-tables";
 import { Button } from "react-bootstrap";
 
 export default function CartForm({
@@ -18,16 +22,41 @@ export default function CartForm({
 }) {
   const [formData, setFormData] = useState({
     email: "",
-    nombre: "",
+    name: "",
     phone: "",
   });
 
   const generateOrder = (e) => {
     e.preventDefault();
 
-    let order = {};
+    if (!isValidForm()) {
+      return;
+    }
 
-    // Validar formulario
+    const order = createOrder();
+    sendOrder(order);
+  };
+
+  const isValidForm = () => {
+    const { email, name, phone } = formData;
+
+    if (!email || !name || !phone) {
+      alert(
+        "Por favor diligencie los datos del formulario para continuar con la orden"
+      );
+      return false;
+    }
+
+    if (!email.toLowerCase().match(EMAIL_REGEXP)) {
+      alert("Por favor ingrese un email válido");
+      return false;
+    }
+
+    return true;
+  };
+
+  const createOrder = () => {
+    let order = {};
 
     order.buyer = formData;
 
@@ -42,7 +71,7 @@ export default function CartForm({
       return { id, title, price, quantity };
     });
 
-    sendOrder(order);
+    return order;
   };
 
   const sendOrder = (order) => {
@@ -67,9 +96,11 @@ export default function CartForm({
 
     for (const item of items) {
       const product = doc(db, PRODUCTS, item.id);
-      getDoc(product).then((resp) => {
-        updateDoc(product, { stock: resp.data().stock - item.quantity });
-      });
+      getDoc(product)
+        .then((resp) => {
+          updateDoc(product, { stock: resp.data().stock - item.quantity });
+        })
+        .catch((error) => console.error(error));
     }
   };
 
@@ -85,9 +116,9 @@ export default function CartForm({
       <form onSubmit={generateOrder}>
         <input
           type="text"
-          name="nombre"
+          name="name"
           placeholder="Ingrese su Nombre"
-          value={formData.nombre}
+          value={formData.name}
           onChange={handleChange}
         />
         <input
