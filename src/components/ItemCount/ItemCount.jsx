@@ -2,9 +2,8 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { Col, Row, Stack } from "react-bootstrap";
 
-const ItemCount = ({ onAdd }) => {
+const ItemCount = ({ onAdd, stock }) => {
   const initial = 1;
-  const stock = 5;
 
   const [count, setCount] = useState(initial);
 

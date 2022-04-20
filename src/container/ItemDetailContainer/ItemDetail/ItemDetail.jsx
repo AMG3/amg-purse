@@ -29,7 +29,7 @@ export default function ItemDetail({ item }) {
           $ {item.price}
         </Card.Subtitle>
         {agregado <= 0 ? (
-          <ItemCount onAdd={onAdd} />
+          <ItemCount onAdd={onAdd} stock={item.stock} />
         ) : (
           <>
             <Link to={`/cart/`}>
