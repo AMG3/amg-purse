@@ -8,21 +8,53 @@ function Header() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-        <NavLink style={{ padding: "1rem" }} to="/">
+        <NavLink
+          style={{
+            padding: "1rem",
+            color: "white",
+            textDecoration: "none",
+            fontWeight: "bold",
+          }}
+          to="/"
+        >
           AMG-PURSE
         </NavLink>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <NavLink style={{ padding: "1rem" }} to="/category/bags">
+            <NavLink
+              style={{
+                padding: "1rem",
+                color: "white",
+                textDecoration: "none",
+                fontWeight: "bold",
+              }}
+              to="/category/bags"
+            >
               Bolsos y Morrales
             </NavLink>
 
-            <NavLink style={{ padding: "1rem" }} to="/category/clothes">
+            <NavLink
+              style={{
+                padding: "1rem",
+                color: "white",
+                textDecoration: "none",
+                fontWeight: "bold",
+              }}
+              to="/category/clothes"
+            >
               Ropa
             </NavLink>
 
-            <NavLink style={{ padding: "1rem" }} to="/category/accessories">
+            <NavLink
+              style={{
+                padding: "1rem",
+                color: "white",
+                textDecoration: "none",
+                fontWeight: "bold",
+              }}
+              to="/category/accessories"
+            >
               Accesorios
             </NavLink>
           </Nav>

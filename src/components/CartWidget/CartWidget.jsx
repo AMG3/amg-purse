@@ -17,7 +17,7 @@ const CartWidget = () => {
         <></>
       ) : (
         <>
-          <BsFillCartFill />
+          <BsFillCartFill style={{ color: "white" }} />
           <Badge pill bg="success">
             {total}
           </Badge>{" "}

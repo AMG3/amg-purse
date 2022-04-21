@@ -43,7 +43,7 @@ function Cart() {
               alignItems: "center",
             }}
           >
-            <Button variant="outline-warning" onClick={cleanCart}>
+            <Button variant="warning" onClick={cleanCart}>
               Limpiar Carro
             </Button>
             <br />

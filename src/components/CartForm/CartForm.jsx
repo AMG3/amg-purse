@@ -124,35 +124,42 @@ export default function CartForm({
 
   return (
     <>
-      <h2>Datos del cliente</h2>
-      <form onSubmit={generateOrder}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Ingrese su Nombre"
-          value={formData.name}
-          className="form-input"
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Ingrese su Email"
-          value={formData.email}
-          className="form-input"
-          onChange={handleChange}
-        />
-        <input
-          type="phone"
-          name="phone"
-          placeholder="Ingrese su Teléfono"
-          value={formData.phone}
-          className="form-input"
-          onChange={handleChange}
-        />
-        <Button variant="warning" type="submit" style={{ width: "100%" }}>
-          Generar Orden
-        </Button>
+      <h3>Datos del cliente</h3>
+      <form
+        onSubmit={generateOrder}
+        style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+      >
+        <div style={{ display: "flex", gap: "1rem" }}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Ingrese su Nombre"
+            value={formData.name}
+            className="form-input"
+            onChange={handleChange}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Ingrese su Email"
+            value={formData.email}
+            className="form-input"
+            onChange={handleChange}
+          />
+          <input
+            type="phone"
+            name="phone"
+            placeholder="Ingrese su Teléfono"
+            value={formData.phone}
+            className="form-input"
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <Button variant="success" type="submit">
+            Generar Orden
+          </Button>
+        </div>
       </form>
       <MessagePopUp
         messageType={MESSAGE_TYPES.ERROR}

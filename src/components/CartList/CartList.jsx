@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Col, Image, Row } from "react-bootstrap";
+import { BsFillTrashFill } from "react-icons/bs";
 
 export default function CartList({ cartContent, removeFromCart }) {
   return (
@@ -35,14 +36,14 @@ export default function CartList({ cartContent, removeFromCart }) {
             {item.quantity}
           </Col>
           <Col xs lg="2">
-            $ {item.item.price}
+            $ {item.item.price.toFixed(2)}
           </Col>
           <Col xs lg="2">
-            $ {item.quantity * item.item.price}
+            $ {(item.quantity * item.item.price).toFixed(2)}
           </Col>
           <Col xs lg="2">
             <Button variant="danger" onClick={() => removeFromCart(item)}>
-              Eliminar
+              <BsFillTrashFill />
             </Button>
           </Col>
         </Row>
