@@ -9,6 +9,7 @@ import {
   where,
 } from "firebase/firestore";
 import { PRODUCTS } from "../../constants/firebase-tables";
+import Loader from "../../components/Loader/Loader";
 
 function ItemListContainer() {
   const [products, setProducts] = useState(null);
@@ -56,7 +57,7 @@ function ItemListContainer() {
       ) : products && products.length === 0 ? (
         <p>No hay productos de esta categoría</p>
       ) : (
-        <p>Cargando productos...</p>
+        <Loader message="Cargando productos..." />
       )}
     </div>
   );
