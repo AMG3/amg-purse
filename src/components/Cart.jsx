@@ -5,7 +5,7 @@ import { useCartContext } from "../context/CartContext";
 import CartList from "./CartList/CartList";
 import CartForm from "./CartForm/CartForm";
 import MessagePopUp from "./MessagePopUp/MessagePopUp";
-import { MESSAGE_TYPES } from "../constants/firebase-tables";
+import { MESSAGE_TYPES } from "../constants/constants";
 
 function Cart() {
   const { cartContent, cleanCart, removeFromCart } = useCartContext();
@@ -18,14 +18,7 @@ function Cart() {
   return (
     <>
       {cartContent.list.length <= 0 ? (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <div className="container-center-elements">
           <p>No hay nada en el carro</p>
           <Link to={`/`}>
             <Button variant="primary">Seguir Comprando</Button>
@@ -35,14 +28,7 @@ function Cart() {
         <Container>
           <CartList cartContent={cartContent} removeFromCart={removeFromCart} />
           <br />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+          <div className="container-center-elements">
             <Button variant="warning" onClick={cleanCart}>
               Limpiar Carro
             </Button>

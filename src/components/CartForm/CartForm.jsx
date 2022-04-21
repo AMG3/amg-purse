@@ -12,7 +12,7 @@ import {
   MESSAGE_TYPES,
   ORDERS,
   PRODUCTS,
-} from "../../constants/firebase-tables";
+} from "../../constants/constants";
 import { Button } from "react-bootstrap";
 import MessagePopUp from "../MessagePopUp/MessagePopUp";
 

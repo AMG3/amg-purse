@@ -8,7 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { PRODUCTS } from "../../constants/firebase-tables";
+import { PRODUCTS } from "../../constants/constants";
 import Loader from "../../components/Loader/Loader";
 
 function ItemListContainer() {
@@ -16,38 +16,43 @@ function ItemListContainer() {
 
   const { categoryId } = useParams();
 
+  const setProductsFromResponse = (resp) => {
+    if (resp.size === 0) {
+      setProducts([]);
+    }
+    const products = resp.docs.map((product) => ({
+      id: product.id,
+      ...product.data(),
+    }));
+    setProducts(products);
+  };
+
   useEffect(() => {
     const querydb = getFirestore();
 
     const queryCollection = collection(querydb, PRODUCTS);
 
+    const getProductsFromFirebase = (query) => {
+      getDocs(query)
+        .then((resp) => {
+          setProductsFromResponse(resp);
+        })
+        .catch((error) => console.error(error));
+    };
+
+    let queryRequest;
+
     if (categoryId) {
-      const q = query(
+      queryRequest = query(
         queryCollection,
         where("category", "==", categoryId),
         where("stock", ">", 0)
       );
-      getDocs(q)
-        .then((resp) => {
-          if (resp.size === 0) {
-            setProducts([]);
-          }
-          const prods = resp.docs.map((p) => ({ id: p.id, ...p.data() }));
-          setProducts(prods);
-        })
-        .catch((error) => console.error(error));
     } else {
-      const q = query(queryCollection, where("stock", ">", 0));
-      getDocs(q)
-        .then((resp) => {
-          if (resp.size === 0) {
-            setProducts([]);
-          }
-          const prods = resp.docs.map((p) => ({ id: p.id, ...p.data() }));
-          setProducts(prods);
-        })
-        .catch((error) => console.error(error));
+      queryRequest = query(queryCollection, where("stock", ">", 0));
     }
+
+    getProductsFromFirebase(queryRequest);
   }, [categoryId]);
 
   return (

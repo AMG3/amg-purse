@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { MESSAGE_TYPES } from "../../constants/firebase-tables";
+import { MESSAGE_TYPES } from "../../constants/constants";
 
 export default function MessagePopUp({
   messageType,
