@@ -15,6 +15,10 @@ Para este proyecto se utilizaron:
 3. React Icons v4.3.1: Sirve para agregar iconos a la aplicación.
 4. Firebase v9.6.10: Sirve para realizar conexión con la base de datos de Firestore y realizar transacciones como agregar, eliminar y actualizar productos y órdenes.
 
+## Productos usados
+
+Se utilizaron los productos de ejemplo de la API gratuita FakeStore (https://fakestoreapi.com/products)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
