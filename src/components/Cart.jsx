@@ -32,7 +32,7 @@ function Cart() {
             <Button variant="warning" onClick={cleanCart}>
               Limpiar Carro
             </Button>
-            <br />
+            <hr />
             <CartForm
               cartContent={cartContent}
               setOrderId={setOrderId}

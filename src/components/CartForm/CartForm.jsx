@@ -15,6 +15,7 @@ import {
 } from "../../constants/constants";
 import { Button } from "react-bootstrap";
 import MessagePopUp from "../MessagePopUp/MessagePopUp";
+import Loader from "../Loader/Loader";
 
 export default function CartForm({
   cartContent,
@@ -30,6 +31,7 @@ export default function CartForm({
 
   const [errorMessage, setErrorMessage] = useState("");
   const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const generateOrder = (e) => {
     e.preventDefault();
@@ -37,6 +39,8 @@ export default function CartForm({
     if (!isValidForm()) {
       return;
     }
+
+    setIsLoading(true);
 
     const order = createOrder();
     sendOrder(order);
@@ -90,11 +94,15 @@ export default function CartForm({
 
     addDoc(ordersCollection, order)
       .then(({ id }) => {
+        setIsLoading(false);
         setOrderId(id);
         setShow(true);
         updateStock(order);
       })
-      .catch((error) => console.error(error))
+      .catch((error) => {
+        setIsLoading(false);
+        console.error(error);
+      })
       .finally(() => {
         cleanCart();
       });
@@ -161,6 +169,8 @@ export default function CartForm({
           </Button>
         </div>
       </form>
+      <br />
+      {isLoading ? <Loader message="Generando orden..." /> : <></>}
       <MessagePopUp
         messageType={MESSAGE_TYPES.ERROR}
         show={showError}

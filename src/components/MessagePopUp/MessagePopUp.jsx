@@ -11,15 +11,22 @@ export default function MessagePopUp({
 }) {
   return (
     <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Orden Generada</Modal.Title>
-      </Modal.Header>
       {messageType === MESSAGE_TYPES.NOTIFICATION ? (
-        <Modal.Body>
-          Su orden fue generada con el código: <strong>{orderId}</strong>
-        </Modal.Body>
+        <>
+          <Modal.Header closeButton>
+            <Modal.Title>Orden Generada</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Su orden fue generada con el código: <strong>{orderId}</strong>
+          </Modal.Body>
+        </>
       ) : (
-        <Modal.Body>{errorMessage}</Modal.Body>
+        <>
+          <Modal.Header closeButton>
+            <Modal.Title>Error</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{errorMessage}</Modal.Body>
+        </>
       )}
       <Modal.Footer>
         <Button variant="primary" onClick={handleClose}>
