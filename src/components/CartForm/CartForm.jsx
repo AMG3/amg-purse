@@ -9,10 +9,12 @@ import {
 } from "firebase/firestore";
 import {
   EMAIL_REGEXP,
+  MESSAGE_TYPES,
   ORDERS,
   PRODUCTS,
 } from "../../constants/firebase-tables";
 import { Button } from "react-bootstrap";
+import MessagePopUp from "../MessagePopUp/MessagePopUp";
 
 export default function CartForm({
   cartContent,
@@ -25,6 +27,9 @@ export default function CartForm({
     name: "",
     phone: "",
   });
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showError, setShowError] = useState(false);
 
   const generateOrder = (e) => {
     e.preventDefault();
@@ -41,17 +46,21 @@ export default function CartForm({
     const { email, name, phone } = formData;
 
     if (!email || !name || !phone) {
-      alert(
+      setErrorMessage(
         "Por favor diligencie los datos del formulario para continuar con la orden"
       );
+      setShowError(true);
       return false;
     }
 
     if (!email.toLowerCase().match(EMAIL_REGEXP)) {
-      alert("Por favor ingrese un email válido");
+      setErrorMessage("Por favor ingrese un email válido");
+      setShowError(true);
       return false;
     }
 
+    setErrorMessage("");
+    setShowError(false);
     return true;
   };
 
@@ -111,6 +120,8 @@ export default function CartForm({
     });
   };
 
+  const handleClose = () => setShowError(false);
+
   return (
     <>
       <form onSubmit={generateOrder}>
@@ -139,6 +150,13 @@ export default function CartForm({
           Generar Orden
         </Button>
       </form>
+      <MessagePopUp
+        messageType={MESSAGE_TYPES.ERROR}
+        show={showError}
+        handleClose={handleClose}
+        errorMessage={errorMessage}
+      />
+      ;
     </>
   );
 }

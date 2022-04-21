@@ -5,6 +5,7 @@ import { useCartContext } from "../context/CartContext";
 import CartList from "./CartList/CartList";
 import CartForm from "./CartForm/CartForm";
 import MessagePopUp from "./MessagePopUp/MessagePopUp";
+import { MESSAGE_TYPES } from "../constants/firebase-tables";
 
 function Cart() {
   const { cartContent, cleanCart, removeFromCart } = useCartContext();
@@ -46,7 +47,12 @@ function Cart() {
           </div>
         </Container>
       )}
-      <MessagePopUp orderId={orderId} show={show} handleClose={handleClose} />
+      <MessagePopUp
+        messageType={MESSAGE_TYPES.NOTIFICATION}
+        orderId={orderId}
+        show={show}
+        handleClose={handleClose}
+      />
     </>
   );
 }
