@@ -34,7 +34,7 @@ export default function CartContextProvider({ children }) {
     setCartContent({
       totalQuantity: cartContent.totalQuantity - item.quantity,
       list: [...cartContent.list],
-      totalPrice: cartContent.totalPrice + item.quantity * item.item.price,
+      totalPrice: cartContent.totalPrice - item.quantity * item.item.price,
     });
   };
 
