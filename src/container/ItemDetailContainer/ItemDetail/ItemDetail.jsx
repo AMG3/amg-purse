@@ -31,14 +31,22 @@ export default function ItemDetail({ item }) {
         {quantity <= 0 ? (
           <ItemCount onAdd={onAdd} stock={item.stock} />
         ) : (
-          <>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "1rem",
+            }}
+          >
             <Link to={`/cart/`}>
               <Button variant="primary">Terminar Compra</Button>
             </Link>
             <Link to={`/`}>
               <Button variant="primary">Seguir Comprando</Button>
             </Link>
-          </>
+          </div>
         )}
       </Card.Body>
     </Card>

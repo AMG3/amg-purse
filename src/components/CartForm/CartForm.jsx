@@ -124,12 +124,14 @@ export default function CartForm({
 
   return (
     <>
+      <h2>Datos del cliente</h2>
       <form onSubmit={generateOrder}>
         <input
           type="text"
           name="name"
           placeholder="Ingrese su Nombre"
           value={formData.name}
+          className="form-input"
           onChange={handleChange}
         />
         <input
@@ -137,6 +139,7 @@ export default function CartForm({
           name="email"
           placeholder="Ingrese su Email"
           value={formData.email}
+          className="form-input"
           onChange={handleChange}
         />
         <input
@@ -144,9 +147,10 @@ export default function CartForm({
           name="phone"
           placeholder="Ingrese su Teléfono"
           value={formData.phone}
+          className="form-input"
           onChange={handleChange}
         />
-        <Button variant="warning" type="submit">
+        <Button variant="warning" type="submit" style={{ width: "100%" }}>
           Generar Orden
         </Button>
       </form>
@@ -156,7 +160,6 @@ export default function CartForm({
         handleClose={handleClose}
         errorMessage={errorMessage}
       />
-      ;
     </>
   );
 }

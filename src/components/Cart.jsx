@@ -18,12 +18,19 @@ function Cart() {
   return (
     <>
       {cartContent.list.length <= 0 ? (
-        <>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <p>No hay nada en el carro</p>
           <Link to={`/`}>
             <Button variant="primary">Seguir Comprando</Button>
           </Link>
-        </>
+        </div>
       ) : (
         <Container>
           <CartList cartContent={cartContent} removeFromCart={removeFromCart} />
@@ -31,13 +38,15 @@ function Cart() {
           <div
             style={{
               display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <Button variant="outline-warning" onClick={cleanCart}>
               Limpiar Carro
             </Button>
+            <br />
             <CartForm
               cartContent={cartContent}
               setOrderId={setOrderId}
