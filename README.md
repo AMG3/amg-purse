@@ -73,5 +73,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 Para este proyecto se utilizaron:
 
-1. React Bootstrap
-2. React Router DOM
+1. React Bootstrap v.2.2.1: Sirve para dar estilos a los componentes.
+2. React Router DOM v6.2.2: Sirve para asignar rutas a ciertos componentes.
+3. React Icons v4.3.1: Sirve para agregar iconos a la aplicación.
+4. Firebase v9.6.10: Sirve para realizar conexión con la base de datos de Firestore y realizar transacciones como agregar, eliminar y actualizar productos y órdenes.
